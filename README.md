@@ -1,6 +1,6 @@
 # FUMA scRNA-seq data sets
 
-This is a github repository for pre-process script of scRNA-seq data sets used on FUMA web application.
+This is a github repository for pre-process script of scRNA-seq data sets used on FUMA web application ([http://fuma.ctglab.nl](http://fuma.ctglab.nl)).
 Processed data sets can also be downloaded from this repository to run MAGMA by yourself.
 
 ## Preparation of genes
@@ -13,7 +13,7 @@ The script is available under scripts/mm2hs.R.
 The output file is mm2hs.RData
 
 ## Data sets
-The list of data sets are available at [FUMA tutorial page](http://fuma.ctg.nl/tutorial#celltype).
+The list of data sets are available at [FUMA tutorial page](http://fuma.ctglab.nl/tutorial#celltype).
 
 Preprocess of each data set is available in one of the following R scripts.
 1. Allen_Brain_Atlas_Cell_Type.R  
