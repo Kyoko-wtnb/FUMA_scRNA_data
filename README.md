@@ -4,7 +4,7 @@ This is a github repository for pre-process script of scRNA-seq data sets used o
 Processed data sets can also be downloaded from this repository to run MAGMA by yourself.
 
 ## Preparation of genes
-### Human Ensembl genes (v92)
+### Human Ensembl genes (GRCh37 v92)
 The script is available under scripts/human_ENSG.R.
 The output file is ENSG.genes.txt
 
@@ -17,18 +17,24 @@ The list of data sets are available at [FUMA tutorial page](http://fuma.ctglab.n
 
 Preprocess of each data set is available in one of the following R scripts.
 1. Allen_Brain_Atlas_Cell_Type.R  
-3 data sets from Allen Brain Atlas.
-2. DroNc.R  
+2 human and 3 mousebrain data sets from Allen Brain Atlas.
+2. Allen_Brain_Atlas_Cell_Type_prev.R  
+3 mouse data sets from Allen Brain Atlas (previously released datasets).
+3. DroNc.R  
 2 data sets (human and mouse) from Habib et al. Nat. Meth. (2017)
-3. DropViz.R  
-Data set from [http://dropviz.org](http://dropviz.org)
-4. Linnarsson_MouseBrainAtlas.R  
-Data sets from [http://mousebrain.org](http://mousebrain.org)
-5. TabulaMuris.R  
+4. DropViz.R  
+Data set from [http://dropviz.org](http://dropviz.org).
+5. Linnarsson_MouseBrainAtlas.R  
+Data sets from [http://mousebrain.org](http://mousebrain.org).
+6. TabulaMuris.R  
 2 data sets (FACS and droplet) from The Tabula Muris Consortium.
-6. Linnersson_lab.R  
+6. MouseCellAtlas.R  
+Data set from [http://bis.zju.edu.cn/MCA/](http://bis.zju.edu.cn/MCA/).
+8. Linnersson_lab.R  
 Other data sets from Linnarsson's group.
-7. GEO.R  
+9. 10X  
+PBMC data set downloaded from 10X Genomics.
+10. GEO.R  
 Everything else.
 
 ## Additional process prior to the process in R scripts

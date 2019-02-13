@@ -1,15 +1,18 @@
 ##### Tabula Muris data #####
-### original study: The Tabula Muris Consortium et al. bioRxiv. 2018
-### data was downloaded from 
-### https://figshare.com/articles/Single-cell_RNA-seq_data_from_Smart-seq2_sequencing_of_FACS_sorted_cells/5715040 for FACS
-### https://figshare.com/articles/Single-cell_RNA-seq_data_from_microfluidic_emulsion/5715025 for droplet
+### original study: The Tabula Muris Consortium et al. Nature. 2018
+### (FACS dataset was updated for v2)
+### data was downloaded from
+### FACS: https://figshare.com/articles/Single-cell_RNA-seq_data_from_Smart-seq2_sequencing_of_FACS_sorted_cells_v2_/5829687
+### droplet: https://figshare.com/articles/Single-cell_RNA-seq_data_from_microfluidic_emulsion/5715025
 ### FACS and droplet data sets were processed separately
-### FACS data set contains 115 cell types from 20 tissues
-### droplet data set contains 75 cells from 12 tissues
+### FACS dataset contains 119 cell types from 20 tissues
+### droplet dataset contains 75 cells from 12 tissues
 ### We created data set with all tissue together and each tissue type separately for both FACS and droplet
-### In total, 1 (all) + 20 (tissues) data sets for FACS
+### In total, 1 (all) + 20 (tissues) + 1 (brain combined) data sets for FACS
+### (for brain combined, cell types from Brain_Non-Meyloid and Brain_Meyloid are combined in to a single file)
 ### and 1 (all) + 12 (tissues) data sets for droplet
-### Cells with label "unknown" were excluded
+### Cells with label "unknown" were included as they are explicitly mentioned as
+### potential novel cell types rather than outliers.
 
 library(data.table)
 library(Matrix)
@@ -17,10 +20,18 @@ library(Matrix)
 ##### FACS data #####
 ### samples
 samples <- fread("TabulaMuris/annotations_FACS.csv", data.table=F)
-samples <- samples[!grepl("unknown", samples$cell_ontology_class),]
 
 ### expression
-count <- fread(input="gzip -cd TabulaMuris/FACS_all.csv.gz", data.table=F)
+files <- list.files("TabulaMuris/FACS/", pattern="*-counts.csv")
+count <- data.frame()
+for(f in files){
+  tmp <- fread(paste0("TabulaMuris/FACS/", f), data.table=F)
+  if(nrow(count)==0){
+    count <- tmp
+  }else{
+    count <- cbind(count, tmp[,-1])
+  }
+}
 g <- count[,1]
 count <- as.matrix(count[,2:ncol(count)])
 rownames(count) <- g
@@ -76,7 +87,7 @@ for(t in ts){
 }
 
 ##### droplet #####
-### samples 
+### samples
 samples <- fread("TabulaMuris/annotations_droplets.csv", data.table=F)
 samples <- samples[!grepl("unknown", samples$cell_ontology_class),]
 

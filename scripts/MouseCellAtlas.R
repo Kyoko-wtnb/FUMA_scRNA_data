@@ -8,7 +8,7 @@
 ### 2) only adult mouse samples (437 cell types from 18 tissue)
 ### 3) only embryo samples (including fetal tissues, 137 cell types)
 ### 4) only neonatal samples (108 cell types)
-### 5) per tissue per sample type (adult, emmbryo, neonatal and cell line, 33 combinatioin in total)
+### 5) per tissue per sample type (adult, embryo, neonatal and cell line, 33 combination in total)
 ### In total 1 (all) + 1 (adult) + 1 (embryo) + 1 (neonatal) + 33 (per tissue per type) = 37 data sets
 
 library(data.table)

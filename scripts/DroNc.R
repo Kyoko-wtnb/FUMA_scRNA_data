@@ -1,7 +1,7 @@
 ##### DroNc data sets #####
 ### original study: Habib et al. Nat. Meth. 2017 (PMID: 28846088)
-### Data is downloadeed from Broadinstitute Single Cell Portal at https://portals.broadinstitute.org/single_cell
-### For human data set, expression data was fownloaded from GTEx at https://www.gtexportal.org/home/
+### Data was downloaded from Broadinstitute Single Cell Portal at https://portals.broadinstitute.org/single_cell
+### For human data set, expression data was downloaded from GTEx at https://www.gtexportal.org/home/
 
 library(data.table)
 
@@ -20,8 +20,8 @@ umi <- as.matrix(umi[,2:ncol(umi)])
 rownames(umi) <- g
 umi <- umi[,samples$cell_id]
 
-# manually assigne cell labels for each cluster
-cell_label <- data.frame(clst=c(1:14,16), 
+# manually assigned cell labels for each cluster
+cell_label <- data.frame(clst=c(1:14,16),
                          cell_type=c("exPFC1","exPFC2", "exCA1", "exCA3", "GABA1", "GABA2", "exDG", "ASC1", "ASC2", "ODC1", "ODC2", "OPC", "MG", "NSC", "END"),
                          stringsAsFactors = F)
 samples$cell_type <- cell_label$cell_type[match(samples$clst, cell_label$clst)]
@@ -88,4 +88,3 @@ for(c in ct){
 cell_log_umi <- data.frame(GENE=genes$hs.ensg[match(rownames(log_umi), genes$symbol)], cell_log_umi)
 cell_log_umi$Average = apply(cell_log_umi[,2:ncol(cell_log_umi)], 1, mean)
 write.table(cell_log_umi, paste0("processed_data/DroNc_Mouse_Hippocampus.txt"), quote=F, row.names=F, sep="\t")
-

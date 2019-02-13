@@ -6,9 +6,9 @@ library(data.table)
 
 ##### GSE59739 #####
 ### original study: Usokin et al. Nat. Neurosci. 2015 (PMID: 25420068)
-### expressio data was downloaded from GSE59739
+### expression data was downloaded from GSE59739
 ### metadata was extracted from S Table 1
-### Only cells with label NF, NP, PEP or TH in level 1 were used to be consistenti with the original study
+### Only cells with label NF, NP, PEP or TH in level 1 were used to be consistent with the original study
 ### We created 3 data sets for each label level 1, 2, and 3
 gse <- "GSE59739"
 ### samples
@@ -437,7 +437,7 @@ write.table(cell_log_umi, paste0("processed_data/Linnarsson_", gse, "_Mouse_Gang
 ### expression data was downloaded from GSE95315
 ### metadata was extracted from family soft file
 ### see README for details
-### cell types were editied to create 22 cell types as described in the original study
+### cell types were edited to create 22 cell types as described in the original study
 gse <- "GSE95315"
 
 ### samples
@@ -495,7 +495,7 @@ genes <- umi[,1]
 umi <- as.matrix(umi[,2:ncol(umi)])
 rownames(umi) <- genes
 
-### map stmbols to hs ENSG
+### map symbol to hs ENSG
 load("genome/mm2hs.RData")
 genes <- data.frame(symbol=rownames(umi), stringsAsFactors = F)
 genes$mm.ensg <- ncbi_mouse$ensg[match(genes$symbol, ncbi_mouse$Symbol)]
@@ -521,6 +521,7 @@ for(c in ct){
 cell_log_umi <- data.frame(GENE=genes$hs.ensg[match(rownames(log_umi), genes$symbol)], cell_log_umi)
 cell_log_umi$Average = apply(cell_log_umi[,2:ncol(cell_log_umi)], 1, mean)
 write.table(cell_log_umi, paste0("processed_data/Linnarsson_", gse, "_Mouse_Dentate_gyrus.txt"), quote=F, row.names=F, sep="\t")
+
 ##### GSE104323 #####
 ### original study: Hochgerner et al. Nat. Neurosci. 2018 (PMID: 29335606)
 ### expression data was downloaded from GSE95315
@@ -569,7 +570,7 @@ write.table(cell_log_umi, paste0("processed_data/Linnarsson_", gse, "_Mouse_Dent
 
 ##### GSE101601 #####
 ### original study: Hochgerner et al. Sci. Rep. 2017 (PMID: 29180631)
-### expressio ndata was obtained from GSE101601
+### expression data was obtained from GSE101601
 ### Human and mouse data sets were processed separately
 gse <- "GSE101601"
 
@@ -580,7 +581,7 @@ genes <- umi[2:nrow(umi),1]
 umi <- as.matrix(apply(umi[2:nrow(umi), 2:ncol(umi)], 2, as.numeric))
 rownames(umi) <- genes
 
-### map symbols to hs ENSG
+### map symbol to hs ENSG
 load("genome/mm2hs.RData")
 genes <- data.frame(symbol=rownames(umi), stringsAsFactors = F)
 genes$mm.ensg <- ncbi_mouse$ensg[match(genes$symbol, ncbi_mouse$Symbol)]
@@ -654,7 +655,7 @@ write.table(cell_log_umi, paste0("processed_data/Linnarsson_", gse, "_Human_Temp
 ### expression data was downloaded from GSE103840
 gse <- "GSE103840"
 
-#### expressopm data
+#### expression data
 umi <- fread(input="gzip -cd Linnarsson/GSE103840_molecule_counts.csv.gz", data.table=F)
 samples <- data.frame(cell_id=colnames(umi)[2:ncol(umi)], t(umi[1:6, 2:ncol(umi)]), stringsAsFactors = F)
 colnames(samples)[2:ncol(samples)] <- gsub(" ", "_", umi[1:6,1])
@@ -663,7 +664,7 @@ genes <- umi[,1]
 umi <- as.matrix(apply(umi[, 2:ncol(umi)], 2, as.numeric))
 rownames(umi) <- genes
 
-### map symbols to hs ENSG
+### map symbol to hs ENSG
 load("genome/mm2hs.RData")
 genes <- data.frame(symbol=rownames(umi), stringsAsFactors = F)
 genes$mm.ensg <- ncbi_mouse$ensg[match(genes$symbol, ncbi_mouse$Symbol)]

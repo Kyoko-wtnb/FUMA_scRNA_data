@@ -29,7 +29,7 @@ rownames(umi) <- genes
 lib_size <- apply(umi, 2, sum)/1000000
 umi <- t(apply(umi, 1, function(x){x/lib_size}))
 
-### map gsenes to hs ENSG ID
+### map genes to hs ENSG ID
 load("genome/mm2hs.RData")
 genes <- data.frame(symbol=rownames(umi), stringsAsFactors = F)
 genes$mm.ensg <- ncbi_mouse$ensg[match(genes$symbol, ncbi_mouse$Symbol)]
@@ -74,7 +74,7 @@ ts_cell_log_umi <- cbind(GENE=genes$hs.ensg[match(rownames(log_umi), genes$symbo
 ts_cell_log_umi$Average <- apply(ts_cell_log_umi[,2:ncol(ts_cell_log_umi)], 1, mean)
 write.table(ts_cell_log_umi, "processed_data/DropViz_all_level2.txt", quote=F, row.names=F, sep="\t")
 
-##### level 1 per barin region #####
+##### level 1 per brain region #####
 for(t in ts){
   tmp_umi <- log_umi[, samples$tissue_subcluster[samples$tissue==t]]
   ct <- unique(samples$class[samples$tissue==t])

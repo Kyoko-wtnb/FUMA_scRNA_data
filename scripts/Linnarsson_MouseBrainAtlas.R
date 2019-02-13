@@ -1,5 +1,5 @@
 ##### Linnarsson's lab Mouse Brain Atlas data #####
-### original study: Zeizel et al. nioRxiv. 2018
+### original study: Zeizel et al. Cell. 2018
 ### Aggregated data at level 6 and level 5 were downloaded from http://mousebrain.org/
 ### l5_all.agg.loom for level 5
 ### l6_r1.agg.loom, l6_r2.agg.loom, l6_r3.agg.loom and l6_r4.agg.loom for level 6
@@ -11,8 +11,8 @@
 ### 6 cell types for level 6 rank 2
 ### 16 cell types for level 6 rank 3
 ### 39 cell types for level 6 rank 4
-### Prior to this process on R, loom (hdf5) file was converted to plain text file using 
-### loom2text.py (availvle in the same github repository)
+### Prior to this process on R, loom (hdf5) file was converted to plain text file using
+### loom2text.py (available in the same github repository)
 
 ##### level 5 #####
 pre <- "l5_all"

@@ -5,9 +5,9 @@
 library(data.table)
 
 ##### GSE87544 #####
-### original study: chen et al. Cell Rep. 2017 (PMID: 28355573)
+### original study: Chen et al. Cell Rep. 2017 (PMID: 28355573)
 ### expression data was downloaded from GSE87544
-### Only cells with "Normal" consition were used
+### Only cells with "Normal" condition were used
 ### To be consistent with teh original study, cells were filtered on those with >2000 expressed genes (non-zero expression)
 ### Cells with label "zothers" were excluded
 gse <- "GSE87544"
@@ -63,8 +63,8 @@ write.table(cell_log_umi, paste0("processed_data/", gse, "_Mouse_Hypothalamus.tx
 
 ##### GSE98816 #####
 ### original study: Vanlandewijck et al. Nature 2018 (PMID: 29443965)
-### exxpression data was downloaded from GSE98816 (used raw count matrix)
-### Cell type label was shaed by the authors
+### expression data was downloaded from GSE98816 (used raw count matrix)
+### Cell type label was shared by the authors
 gse <- "GSE98816"
 
 ### samples
@@ -106,8 +106,8 @@ write.table(cell_log_cpm, paste0("processed_data/", gse, "_Mouse_Brain_Vascular.
 
 ##### GSE99235 #####
 ### original study: Vanlandewijck et al. Nature 2018 (PMID: 29443965)
-### exxpression data was downloaded from GSE99235 (used raw count matrix)
-### Cell type label was shaed by the authors
+### expression data was downloaded from GSE99235 (used raw count matrix)
+### Cell type label was shared by the authors
 gse <- "GSE99235"
 
 ### samples
@@ -151,7 +151,7 @@ write.table(cell_log_cpm, paste0("processed_data/", gse, "_Mouse_Lung_Vascular.t
 ### original study: Enge et al. Cell 2017 (PMID: 28965763)
 ### expression data was downloaded from GSE81547
 ### metadata was extracted from family soft file
-### raw expression per individual cell were concatanated prior to this process on R
+### raw expression per individual cell were concatenated prior to this process on R
 ### see README for details
 gse <- "GSE81547"
 
@@ -167,7 +167,7 @@ count <- as.matrix(count[,2:ncol(count)])
 rownames(count) <- g
 
 ### map genes to ENSG
-ENSG <- fread("~/Documents/VU/Data/BioMart/v92/ENSG.genes.txt", data.table = F)
+ENSG <- fread("ENSG.genes.txt", data.table = F)
 genes <- data.frame(symbol=rownames(count), stringsAsFactors = F)
 genes$hs.ensg <- ENSG$ensembl_gene_id[match(genes$symbol, ENSG$external_gene_name)]
 dup <- unique(genes$hs.ensg[duplicated(genes$hs.ensg)])
@@ -191,7 +191,7 @@ write.table(cell_log_cpm, paste0("processed_data/", gse, "_Human_Pancreas.txt"),
 ### original study: Zhong et al. Nature 2018 (PMID: 29539641)
 ### expression data was downloaded from GSE104276 (TPM_NOERCC file)
 ### Cell type was extracted from excel sheet (GSE104276_readme_sample_barcode.xlsx, sheet named "SampleInfo")
-### We created the followoing two data sets,
+### We created the following two data sets,
 ### 1) per cell type average expression across developmental stage
 ### 2) per cell type per developmental stage average expression
 gse <- "GSE104276"
@@ -208,7 +208,7 @@ tpm <- as.matrix(tpm[2:ncol(tpm)])
 rownames(tpm) <- g
 
 ### map genes to ENSG
-ENSG <- fread("~/Documents/VU/Data/BioMart/v92/ENSG.genes.txt", data.table = F)
+ENSG <- fread("ENSG.genes.txt", data.table = F)
 genes <- data.frame(symbol=rownames(tpm), stringsAsFactors = F)
 genes$hs.ensg <- ENSG$ensembl_gene_id[match(genes$symbol, ENSG$external_gene_name)]
 dup <- unique(genes$hs.ensg[duplicated(genes$hs.ensg)])
@@ -287,11 +287,11 @@ write.table(cell_log_cpm, paste0("processed_data/", gse, "_Mouse_Striatum.txt"),
 
 
 ##### GSE89232 #####
-### oeiginal study: Breton et al. J. Exp. Med. 2016 (PMID: 27864467)
+### original study: Breton et al. J. Exp. Med. 2016 (PMID: 27864467)
 ### expression data was downloaded from GSE89232
 ### metadata was extracted from family soft file
-### see README for detils
-### Cell type labels were manually aligned with the orignal study
+### see README for details
+### Cell type labels were manually aligned with the original study
 gse <- "GSE89232"
 
 ### samples
@@ -309,7 +309,7 @@ tpm <- as.matrix(tpm[,2:ncol(tpm)])
 rownames(tpm) <- g
 
 ### map genes to ENSG
-ENSG <- fread("~/Documents/VU/Data/BioMart/v92/ENSG.genes.txt", data.table = F)
+ENSG <- fread("ENSG.genes.txt", data.table = F)
 genes <- data.frame(symbol=rownames(tpm), stringsAsFactors = F)
 genes$hs.ensg <- ENSG$ensembl_gene_id[match(genes$symbol, ENSG$external_gene_name)]
 dup <- unique(genes$hs.ensg[duplicated(genes$hs.ensg)])
@@ -332,7 +332,7 @@ write.table(cell_log_tpm, paste0("processed_data/", gse, "_Human_Blood.txt"), qu
 ### original study: Mohammed, et al. Cell Rep. 2017 (PMID: 28768204)
 ### expression data was downloaded from GSE100597
 ### only developmental stage was used as the cell label
-### E6.75 was replaced with E6.5 to be consistent with the original stidu
+### E6.75 was replaced with E6.5 to be consistent with the original study
 gse <- "GSE100597"
 
 ### expression and samples
@@ -373,7 +373,7 @@ cell_log_cpm$Average = apply(cell_log_cpm[,2:ncol(cell_log_cpm)], 1, mean)
 write.table(cell_log_cpm, paste0("processed_data/", gse, "_Mouse_Embryo.txt"), quote=F, row.names=F, sep="\t")
 
 ##### GSE93374 #####
-### original study: campbell et al. Nat. Neurosci. 2017 (PMID: 28166221)
+### original study: Campbell et al. Nat. Neurosci. 2017 (PMID: 28166221)
 ### expression data was downloaded from GSE93374
 ### Batch corrected normalized data was used (GSE93374_Merged_all_020816_BatchCorrected_LNtransformed_doubletsremoved_Data.txt.gz)
 ### Level 1, level 2 and clusters for neurons were processed separately
@@ -541,7 +541,7 @@ write.table(cell_log_umi, paste0("processed_data/", gse, "_Mouse_Epithelium_drop
 ##### GSE89164 #####
 ### original study: Alle et al. MBC Biol. 2017 (PMID: 28526029)
 ### expression data was downloaded from GSE89164 (raw data)
-### Combiend count matrices for two mouse replicates
+### Combined count matrices for two mouse replicates
 ### Cell type label was manually assigned to the cluster index based on the original study
 gse <- "GSE89164"
 
@@ -616,7 +616,7 @@ count <- as.matrix(count[,2:ncol(count)])
 rownames(count) <- g
 
 ### map genes to ENSG
-ENSG <- fread("~/Documents/VU/Data/BioMart/v92/ENSG.genes.txt", data.table = F)
+ENSG <- fread("ENSG.genes.txt", data.table = F)
 genes <- data.frame(symbol=rownames(count), stringsAsFactors = F)
 genes$hs.ensg <- ENSG$ensembl_gene_id[match(genes$symbol, ENSG$external_gene_name)]
 dup <- unique(genes$hs.ensg[duplicated(genes$hs.ensg)])
@@ -693,3 +693,102 @@ for(c in ct){
 cell_log_umi <- data.frame(GENE=genes$hs.ensg[match(rownames(log_umi), genes$symbol)], cell_log_umi)
 cell_log_umi$Average = apply(cell_log_umi[,2:ncol(cell_log_umi)], 1, mean)
 write.table(cell_log_umi, paste0("processed_data/", gse, "_Mouse_Cortex.txt"), quote=F, row.names=F, sep="\t")
+
+##### GSE84133 #####
+### original study: Baron et al. Mol. Cell Systems 2016 (PMID: 27667365)
+### expression data was downloaded from GSE84133 (raw data)
+gse <- "GSE84133"
+
+### Human data
+### only use samples 1-3 (sample 4 with T2D)
+## expression data
+files <- list.files("GEO/GSE84133_raw", pattern="*human*")
+umi <- data.frame()
+samples <- data.frame()
+for(f in files[1:3]){
+  tmp <- fread(input=paste0("gzip -cd GEO/GSE84133_raw/", f), data.table=F)
+  s <- tmp[,1:3]
+  colnames(s) <- c("cell_id", "barcode", "cell_type")
+  u <- t(tmp[4:ncol(tmp)])
+  colnames(u) <- s$cell_id
+  if(nrow(samples)==0){
+    samples <- s
+    umi <- u
+  }else{
+    samples <- rbind(samples, s)
+    umi <- cbind(umi, u)
+  }
+}
+rm(tmp, s, u)
+umi <- as.matrix(umi)
+
+### map genes to ENSG
+ENSG <- fread("ENSG.genes.txt", data.table = F)
+genes <- data.frame(symbol=rownames(umi), stringsAsFactors = F)
+genes$hs.ensg <- ENSG$ensembl_gene_id[match(genes$symbol, ENSG$external_gene_name)]
+dup <- unique(genes$hs.ensg[duplicated(genes$hs.ensg)])
+genes$hs.ensg[genes$hs.ensg %in% dup] <- NA
+umi <- umi[genes$symbol[!is.na(genes$hs.ensg)],]
+genes <- genes[!is.na(genes$hs.ensg),]
+
+### process
+log_umi <- log2(umi+1)
+ct <- sort(unique(samples$cell_type))
+cell_log_umi <- matrix(nrow=nrow(log_umi), ncol=length(ct))
+colnames(cell_log_umi) <- ct
+for(c in ct){
+  cell_log_umi[,c] <- apply(log_umi[,samples$cell_id[samples$cell_type==c]], 1, mean)
+}
+cell_log_umi <- data.frame(GENE=genes$hs.ensg[match(rownames(log_umi), genes$symbol)], cell_log_umi)
+cell_log_umi$Average <- apply(cell_log_umi[,2:ncol(cell_log_umi)], 1, mean)
+write.table(cell_log_umi, paste0("processed_data/", gse, "_Human_Pancreas.txt"), quote=F, row.names=F, sep="\t")
+
+#### Mouse data
+### expression data
+files <- list.files("GEO/GSE84133_raw", pattern="*mouse*")
+umi <- data.frame()
+samples <- data.frame()
+for(f in files){
+  tmp <- fread(input=paste0("gzip -cd GEO/GSE84133_raw/", f), data.table=F)
+  s <- tmp[,1:3]
+  colnames(s) <- c("cell_id", "barcode", "cell_type")
+  u <- t(tmp[4:ncol(tmp)])
+  colnames(u) <- s$cell_id
+  if(nrow(samples)==0){
+    samples <- s
+    umi <- u
+  }else{
+    samples <- rbind(samples, s)
+    umi <- cbind(umi, u)
+  }
+}
+rm(tmp, s, u)
+umi <- as.matrix(umi)
+
+### map genes to hs ENSG
+load("genome/mm2hs.RData")
+genes <- data.frame(symbol=rownames(umi), stringsAsFactors = F)
+genes$mm.ensg <- ncbi_mouse$ensg[match(genes$symbol, ncbi_mouse$Symbol)]
+ncbi_mouse$Synonyms <- paste0("|", ncbi_mouse$Synonyms, "|")
+genes$mm.ensg[is.na(genes$mm.ensg)] <- sapply(genes$symbol[is.na(genes$mm.ensg)], function(x){
+  n <- grep(paste0("|",x,"|"), ncbi_mouse$Synonyms)
+  if(length(n)==1){ncbi_mouse$ensg[n]}
+  else{NA}
+})
+genes$hs.ensg <- mm2hs$hs.ensg[match(genes$mm.ensg, mm2hs$mm.ensg)]
+dup <- unique(genes$hs.ensg[duplicated(genes$hs.ensg)])
+genes$hs.ensg[genes$hs.ensg %in% dup] <- NA
+umi <- umi[genes$symbol[!is.na(genes$hs.ensg)],]
+genes <- genes[!is.na(genes$hs.ensg),]
+
+### process
+log_umi <- log2(umi+1)
+ct <- sort(unique(samples$cell_type))
+cell_log_umi <- matrix(nrow=nrow(log_umi), ncol=length(ct))
+colnames(cell_log_umi) <- ct
+for(c in ct){
+  cell_log_umi[,c] <- apply(log_umi[,samples$cell_id[samples$cell_type==c]], 1, mean)
+}
+cell_log_umi <- data.frame(GENE=genes$hs.ensg[match(rownames(log_umi), genes$symbol)], cell_log_umi)
+cell_log_umi$Average = apply(cell_log_umi[,2:ncol(cell_log_umi)], 1, mean)
+write.table(cell_log_umi, paste0("processed_data/", gse, "_Mouse_Pancreas.txt"), quote=F, row.names=F, sep="\t")
