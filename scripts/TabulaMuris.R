@@ -86,6 +86,13 @@ for(t in ts){
   write.table(cell_log_cpm, paste0("processed_data/TabulaMuris_FACS_", gsub(" ", "_", t), ".txt"), quote=F, row.names=F, sep="\t")
 }
 
+## brain combined
+cell_log_cpm <- fread("processed_data/TabulaMuris_FACS_Brain_Myeloid.txt", data.table=F)
+tmp <- fread("processed_data/TabulaMuris_FACS_Brain_Non-Myeloid.txt", data.table=F)
+cell_log_cpm <- cbind(cell_log_cpm[,-ncol(cell_log_cpm)], tmp[match(cell_log_cpm$GENE, tmp$GENE), c(-1, -ncol(tmp))])
+cell_loc_cpm$Average <- apply(cell_log_cpm[,-1], 1, mean)
+write.table(cell_log_cpm, "processed_data/TabulaMuris_FACS_Brain.txt", quote=F, row.names=F, sep="\t")
+
 ##### droplet #####
 ### samples
 samples <- fread("TabulaMuris/annotations_droplets.csv", data.table=F)

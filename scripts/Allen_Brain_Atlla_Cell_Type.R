@@ -29,7 +29,7 @@ samples <- samples[samples$cluster!="no class",]
 count <- count[,samples$sample_name]
 
 ### map genes to ENSG
-ENSG <- fread("~/Documents/VU/Data/BioMart/v92/ENSG.genes.txt", data.table = F)
+ENSG <- fread("BioMart/v92/ENSG.genes.txt", data.table = F)
 genes <- data.frame(symbol=rownames(count), stringsAsFactors = F)
 genes$hs.ensg <- ENSG$ensembl_gene_id[match(genes$symbol, ENSG$external_gene_name)]
 genes$hs.ensg[is.na(genes$hs.ensg)] <- sapply(genes$symbol[is.na(genes$hs.ensg)], function(x){
@@ -91,7 +91,7 @@ samples <- samples[samples$cluster!="no class",]
 count <- count[,samples$sample_name]
 
 ### map genes to ENSG
-ENSG <- fread("~/Documents/VU/Data/BioMart/v92/ENSG.genes.txt", data.table = F)
+ENSG <- fread("BioMart/v92/ENSG.genes.txt", data.table = F)
 genes <- data.frame(symbol=rownames(count), stringsAsFactors = F)
 genes$hs.ensg <- ENSG$ensembl_gene_id[match(genes$symbol, ENSG$external_gene_name)]
 genes$hs.ensg[is.na(genes$hs.ensg)] <- sapply(genes$symbol[is.na(genes$hs.ensg)], function(x){

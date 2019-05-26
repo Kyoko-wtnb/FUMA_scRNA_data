@@ -792,3 +792,99 @@ for(c in ct){
 cell_log_umi <- data.frame(GENE=genes$hs.ensg[match(rownames(log_umi), genes$symbol)], cell_log_umi)
 cell_log_umi$Average = apply(cell_log_umi[,2:ncol(cell_log_umi)], 1, mean)
 write.table(cell_log_umi, paste0("processed_data/", gse, "_Mouse_Pancreas.txt"), quote=F, row.names=F, sep="\t")
+
+##### GSE97478 #####
+### original study: Munoz-Manchado et al. Cell Rep. 2018 (PMID: 30134177)
+### expression data was downloaded from GSE97478
+gse <- "GSE97478"
+
+### sample and expression data
+umi <- fread(cmd="gzip -cd GEO/GSE97478_Munoz-Manchado_et_al_molecule_count.txt.gz", data.table=F, header=T)
+samples <- data.frame(cell_id=colnames(umi)[-1], stringsAsFactors = F)
+samples <- cbind(samples, t(umi[1:6,-1]))
+colnames(samples)[2:7] <- c("cell_type", "strain", "GFP", "RFP", "age", "sex")
+rownames(samples) <- NULL
+samples$cell_type <- sub("-", "_", samples$cell_type)
+umi <- umi[8:nrow(umi),]
+genes <- umi[,1]
+umi <- as.matrix(apply(umi[,-1], 2, as.numeric))
+rownames(umi) <- genes
+umi <- umi[,samples$cell_id]
+
+### map symbol to ENSG
+load("genome/mm2hs.RData")
+genes <- data.frame(symbol=rownames(umi), stringsAsFactors = F)
+genes$mm.ensg <- ncbi_mouse$ensg[match(genes$symbol, ncbi_mouse$Symbol)]
+ncbi_mouse$Synonyms <- paste0("|", ncbi_mouse$Synonyms, "|")
+genes$mm.ensg[is.na(genes$mm.ensg)] <- sapply(genes$symbol[is.na(genes$mm.ensg)], function(x){
+  n <- grep(paste0("|",x,"|"), ncbi_mouse$Synonyms)
+  if(length(n)==1){ncbi_mouse$ensg[n]}
+  else{NA}
+})
+genes$hs.ensg <- mm2hs$hs.ensg[match(genes$mm.ensg, mm2hs$mm.ensg)]
+dup <- unique(genes$hs.ensg[duplicated(genes$hs.ensg)])
+genes$hs.ensg[genes$hs.ensg %in% dup] <- NA
+umi <- umi[genes$symbol[!is.na(genes$hs.ensg)],]
+genes <- genes[!is.na(genes$hs.ensg),]
+
+### process
+log_umi <- log2(umi+1)
+ct <- sort(unique(samples$cell_type))
+cell_log_umi <- matrix(nrow=nrow(log_umi), ncol=length(ct))
+colnames(cell_log_umi) <- ct
+for(c in ct){
+  if(length(which(samples$cell_type==c))==1){
+    cell_log_umi[,c] <- log_umi[,samples$cell_id[samples$cell_type==c]]
+  }else{
+    cell_log_umi[,c] <- apply(log_umi[,samples$cell_id[samples$cell_type==c]], 1, mean)
+  }
+}
+cell_log_umi <- cbind(GENE=genes$hs.ensg[match(rownames(log_umi), genes$symbol)], cell_log_umi, Average = apply(cell_log_umi, 1, mean))
+write.table(cell_log_umi, paste0("processed_data/", gse, "_Mouse_Striatum_Cortex.txt"), quote=F, row.names=F, sep="\t")
+
+##### GSE106707 #####
+### original study: Munoz-Manchado et al. Cell Rep. 2018 (PMID: 30134177)
+### expression data was downloaded from GSE106707
+gse <- "GSE106707"
+
+### samples
+samples <- fread("GEO/GSE106707_celltype.txt", data.table=F)
+samples$cell_type <- sub("-", "_", samples$cell_type)
+
+### sample and expression data
+umi <- fread(cmd="gzip -cd GEO/GSE106707_expression_data.tab.gz", data.table=F, header=T)
+genes <- umi[,1]
+umi <- as.matrix(umi[,-1])
+rownames(umi) <- genes
+umi <- umi[,samples$cell_id]
+
+### map symbol to ENSG
+load("genome/mm2hs.RData")
+genes <- data.frame(symbol=rownames(umi), stringsAsFactors = F)
+genes$mm.ensg <- ncbi_mouse$ensg[match(genes$symbol, ncbi_mouse$Symbol)]
+ncbi_mouse$Synonyms <- paste0("|", ncbi_mouse$Synonyms, "|")
+genes$mm.ensg[is.na(genes$mm.ensg)] <- sapply(genes$symbol[is.na(genes$mm.ensg)], function(x){
+  n <- grep(paste0("|",x,"|"), ncbi_mouse$Synonyms)
+  if(length(n)==1){ncbi_mouse$ensg[n]}
+  else{NA}
+})
+genes$hs.ensg <- mm2hs$hs.ensg[match(genes$mm.ensg, mm2hs$mm.ensg)]
+dup <- unique(genes$hs.ensg[duplicated(genes$hs.ensg)])
+genes$hs.ensg[genes$hs.ensg %in% dup] <- NA
+umi <- umi[genes$symbol[!is.na(genes$hs.ensg)],]
+genes <- genes[!is.na(genes$hs.ensg),]
+
+### process
+log_umi <- log2(umi+1)
+ct <- sort(unique(samples$cell_type))
+cell_log_umi <- matrix(nrow=nrow(log_umi), ncol=length(ct))
+colnames(cell_log_umi) <- ct
+for(c in ct){
+  if(length(which(samples$cell_type==c))==1){
+    cell_log_umi[,c] <- log_umi[,samples$cell_id[samples$cell_type==c]]
+  }else{
+    cell_log_umi[,c] <- apply(log_umi[,samples$cell_id[samples$cell_type==c]], 1, mean)
+  }
+}
+cell_log_umi <- cbind(GENE=genes$hs.ensg[match(rownames(log_umi), genes$symbol)], cell_log_umi, Average = apply(cell_log_umi, 1, mean))
+write.table(cell_log_umi, paste0("processed_data/", gse, "_Mouse_Striatum_Cortex.txt"), quote=F, row.names=F, sep="\t")

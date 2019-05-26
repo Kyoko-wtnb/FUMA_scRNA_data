@@ -3,6 +3,15 @@
 This is a github repository for pre-process script of scRNA-seq data sets used on FUMA web application ([http://fuma.ctglab.nl](http://fuma.ctglab.nl)).
 Processed data sets can also be downloaded from this repository to run MAGMA by yourself.
 
+## updates
+* 19th May 2019:  
+Added: PsychENCODE, GSE97478, GSE106707
+* 13th Feb 2019:  
+Added: Allene Brain Atlas Cell Type second release,10X dataset   
+Updated: Tabula Muris FACS
+* 19th Jul 2018:  
+First release
+
 ## Preparation of genes
 ### Human Ensembl genes (GRCh37 v92)
 The script is available under scripts/human_ENSG.R.
@@ -32,10 +41,15 @@ Data sets from [http://mousebrain.org](http://mousebrain.org).
 Data set from [http://bis.zju.edu.cn/MCA/](http://bis.zju.edu.cn/MCA/).
 8. Linnersson_lab.R  
 Other data sets from Linnarsson's group.
-9. 10X  
+9. 10X.R  
 PBMC data set downloaded from 10X Genomics.
+10. PsychENCODE.R  
+2 data sets from PsychENCODE.
 10. GEO.R  
 Everything else.
+
+## Citation
+A publication related to this study is under preparation.
 
 ## Additional process prior to the process in R scripts
 ### 1. GSE67602 (Linnarsson's lab)
@@ -160,5 +174,21 @@ echo -e "cell_id\tcell_type" >GSE89232_celltype.txt
 paste title.txt celltype.txt >>GSE89232_celltype.txt
 ```
 
-## Citation
-A publication related to this study is under preparation.
+### 9. GSE97478
+Metadata for cells were extracted from family soft file by the following commands.
+```
+gzip -cd GSE97478_family.soft.gz | grep Sample_title | sed 's/^!Sample_title = //' >title.txt
+gzip -cd GSE97478_family.soft.gz | grep "cell type:" | grep -v "(" | sed 's/!Sample_characteristics_ch1 = cell type: //' >celltype.txt
+echo -e "cell_id\tcell_type" >GSE97478_celltype.txt
+paste title.txt celltype.txt >>GSE97478_celltype.txt
+```
+
+### 9. GSE106707
+Metadata for cells were extracted from family soft file by the following commands.
+```
+gzip -cd GSE106707_family.soft.gz | grep Sample_title | sed 's/^!Sample_title = //' >title.txt
+gzip -cd GSE106707_family.soft.gz | grep "cell type:" | grep -v "(" | sed 's/!Sample_characteristics_ch1 = cell type: //' >celltype.txt
+gzip -cd GSE106707_family.soft.gz | grep "postnatal days:" | grep -v "(" | sed 's/!Sample_characteristics_ch1 = postnatal days: //' >pd.txt
+echo -e "cell_id\tcell_type\tpd" >GSE106707_celltype.txt
+paste title.txt celltype.txt pd.txt >>GSE106707_celltype.txt
+```
