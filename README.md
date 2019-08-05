@@ -4,6 +4,8 @@ This is a github repository for pre-process script of scRNA-seq data sets used o
 Processed data sets can also be downloaded from this repository to run MAGMA by yourself.
 
 ## updates
+* 5 Aug 2019:
+Updated citation
 * 19th May 2019:  
 Added: PsychENCODE, GSE97478, GSE106707
 * 13th Feb 2019:  
@@ -49,7 +51,8 @@ PBMC data set downloaded from 10X Genomics.
 Everything else.
 
 ## Citation
-A publication related to this study is under preparation.
+K. Watanabe et al. Genetic mapping of cell type specificity for complex traits. <em>Nat. Commun.</em> **10**:3222. (2019).  
+[https://www.nature.com/articles/s41467-019-11181-1](https://www.nature.com/articles/s41467-019-11181-1)
 
 ## Additional process prior to the process in R scripts
 ### 1. GSE67602 (Linnarsson's lab)
@@ -183,7 +186,7 @@ echo -e "cell_id\tcell_type" >GSE97478_celltype.txt
 paste title.txt celltype.txt >>GSE97478_celltype.txt
 ```
 
-### 9. GSE106707
+### 10. GSE106707
 Metadata for cells were extracted from family soft file by the following commands.
 ```
 gzip -cd GSE106707_family.soft.gz | grep Sample_title | sed 's/^!Sample_title = //' >title.txt
