@@ -16,8 +16,7 @@ First release
 
 ## Preparation of genes
 ### Human Ensembl genes (GRCh37 v92)
-The script is available under scripts/human_ENSG.R.
-The output file is ENSG.genes.txt
+The list of genes with Ensembl ID are in ENSG.genes.txt
 
 ### Mapping of mouse gene ID to human gene ID
 The script is available under scripts/mm2hs.R.
